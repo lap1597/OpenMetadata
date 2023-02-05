@@ -64,7 +64,7 @@ public class ExposedAnnotator extends AbstractAnnotator {
         jMethod.annotate(ExposedField.class);
       }
     } catch (NoSuchFieldException | IllegalAccessException e) {
-      throw new Exception(e);
+      throw new IllegalAccessException(e);
     }
   }
 
@@ -74,7 +74,7 @@ public class ExposedAnnotator extends AbstractAnnotator {
       //clazzField.setAccessible(true);
       return ((JClass) clazzField.get(annotation)).fullName();
     } catch (NoSuchFieldException | IllegalAccessException e) {
-      throw new Exception(e);
+      throw new IllegalAccessException(e);
     }
   }
 }
