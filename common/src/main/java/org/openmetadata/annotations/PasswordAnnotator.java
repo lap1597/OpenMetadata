@@ -22,6 +22,16 @@ import com.sun.codemodel.JMethod;
 import java.lang.reflect.Field;
 import org.jsonschema2pojo.AbstractAnnotator;
 
+
+class NoSuchFieldorIlliegalAccessException extends Exception {
+  public NoSuchFieldorIlliegalAccessException(String s)
+  {
+    //super(s);
+    System.out.println(s);
+  }
+}
+
+
 /** Add {@link PasswordField} annotation to generated Java classes */
 public class PasswordAnnotator extends AbstractAnnotator {
 
@@ -64,7 +74,7 @@ public class PasswordAnnotator extends AbstractAnnotator {
         jMethod.annotate(PasswordField.class);
       }
     } catch (NoSuchFieldException | IllegalAccessException e) {
-      throw new RuntimeException(e);
+      throw new NoSuchFieldorIlliegalAccessException("No Such Field or Illegal Access");
     }
   }
 
@@ -74,7 +84,7 @@ public class PasswordAnnotator extends AbstractAnnotator {
       clazzField.setAccessible(true);
       return ((JClass) clazzField.get(annotation)).fullName();
     } catch (NoSuchFieldException | IllegalAccessException e) {
-      throw new RuntimeException(e);
+      throw new NoSuchFieldorIlliegalAccessException("No Such Field or Illegal Access");
     }
   }
 }
